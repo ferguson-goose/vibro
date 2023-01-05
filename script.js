@@ -6,14 +6,16 @@ window.addEventListener("load", () => {
     if (!tg) return;
 
     if (!tg.isExpanded) {
+        console.log("expand")
         tg.expand();
     }
+
+    // vibrate();
 })
 
 button.addEventListener("click", () => {
     if (!tg) return;
 
-    const { impactOccurred } = tg?.HapticFeedback;
     buttonActive = !buttonActive;
 
     if (buttonActive) {
@@ -23,8 +25,23 @@ button.addEventListener("click", () => {
         button.classList.remove("working");
         button.innerHTML = "PUSH ME"
     }
+
+    vibrate();
 })
 
-while (buttonActive) {
-    setTimeout(() => impactOccurred("soft"))
+function delayExecution (ms) {
+    const { impactOccurred } = tg?.HapticFeedback;
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            impactOccurred("soft")
+            resolve()
+        }, ms)
+    })
+}
+
+async function vibrate() {
+    while (buttonActive) {
+        await delayExecution(100);
+    }
 }
