@@ -50,13 +50,13 @@ function delayHaptic(ms) {
     return new Promise((resolve) => {
         setTimeout(() => {
             if (vNum <= 4) {
-                impactOccurred(vibroVars[vNum]);
+                resolve(impactOccurred(vibroVars[vNum]));
             } else if (vNum > 4 && vNum < 8) {
-                notificationOccurred(vibroVars[vNum])
+                resolve(notificationOccurred(vibroVars[vNum]))
             } else if (vNum > 7) {
-                selectionChanged();
+                resolve(selectionChanged());
             }
-            resolve()
+            // resolve()
         }, ms)
     })
 }
