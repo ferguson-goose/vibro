@@ -11,6 +11,7 @@ body {
     color: #fff2f0;
     font-weight: 500;
     font-size: 17px;
+    letter-spacing: 1px;
     width: 200px;
     height: 60px;
     border-radius: 8px;
@@ -18,8 +19,6 @@ body {
     cursor: pointer;
     transition: transform 200ms, box-shadow 200ms;
     animation: pulse 2s ease-out infinite;
-    -webkit-animation: pulse 2s ease-out infinite;
-    -moz-animation: pulse 2s ease-out infinite;
 }
 
 .pulsing_button.working {
