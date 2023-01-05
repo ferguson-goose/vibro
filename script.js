@@ -1,19 +1,19 @@
 const button = document.querySelector(".pulsing_button");
 const tg = window.Telegram?.WebApp;
-const {impactOccurred, notificationOccurred, selectionChanged} = tg?.HapticFeedback;
 
 let buttonActive = false;
 let vNum = 0;
 const vibroVars = [
-    impactOccurred("light"),
-    impactOccurred("medium"),
-    impactOccurred("heavy"),
-    impactOccurred("rigid"),
-    impactOccurred("soft"),
-    notificationOccurred("error"),
-    notificationOccurred("success"),
-    notificationOccurred("warning"),
-    selectionChanged()];
+    "light",
+    "medium",
+    "heavy",
+    "rigid",
+    "soft",
+    "error",
+    "success",
+    "warning",
+    "selectionChanged"
+    ];
 window.addEventListener("load", () => {
     if (!tg) return;
 
@@ -29,7 +29,7 @@ button.addEventListener("click", () => {
 
     if (buttonActive) {
         button.classList.add("working");
-        button.innerHTML = vNum;
+        button.innerHTML = vibroVars[vNum];
     } else {
         button.classList.remove("working");
         button.innerHTML = "PUSH ME"
@@ -45,9 +45,17 @@ button.addEventListener("click", () => {
 })
 
 function delayHaptic(ms) {
+    const {impactOccurred, notificationOccurred, selectionChanged} = tg?.HapticFeedback;
+
     return new Promise((resolve) => {
         setTimeout(() => {
-            impactOccurred(vibroVars[vNum])
+            if (vNum <= 4) {
+                impactOccurred(vibroVars[vNum]);
+            } else if (vNum > 4 && vNum < 8) {
+                notificationOccurred(vibroVars[vNum])
+            } else if (vNum > 7) {
+                selectionChanged();
+            }
             resolve()
         }, ms)
     })
