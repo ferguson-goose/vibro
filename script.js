@@ -1,16 +1,25 @@
 const button = document.querySelector(".pulsing_button");
 const tg = window.Telegram?.WebApp;
+const {impactOccurred, notificationOccurred, selectionChanged} = tg?.HapticFeedback;
 
 let buttonActive = false;
+let vNum = 0;
+const vibroVars = [
+    impactOccurred("light"),
+    impactOccurred("medium"),
+    impactOccurred("heavy"),
+    impactOccurred("rigid"),
+    impactOccurred("soft"),
+    notificationOccurred("error"),
+    notificationOccurred("success"),
+    notificationOccurred("warning"),
+    selectionChanged()];
 window.addEventListener("load", () => {
     if (!tg) return;
 
     if (!tg.isExpanded) {
-        console.log("expand")
         tg.expand();
     }
-
-    // vibrate();
 })
 
 button.addEventListener("click", () => {
@@ -20,21 +29,25 @@ button.addEventListener("click", () => {
 
     if (buttonActive) {
         button.classList.add("working");
-        button.innerHTML = "Working..."
+        button.innerHTML = vNum;
     } else {
         button.classList.remove("working");
         button.innerHTML = "PUSH ME"
+
+        if (vNum < vibroVars.length - 1) {
+            vNum++;
+        } else {
+            vNum = 0;
+        }
     }
 
     vibrate();
 })
 
-function delayExecution (ms) {
-    const { impactOccurred } = tg?.HapticFeedback;
-
+function delayHaptic(ms) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            impactOccurred("soft")
+            impactOccurred(vibroVars[vNum])
             resolve()
         }, ms)
     })
@@ -42,6 +55,6 @@ function delayExecution (ms) {
 
 async function vibrate() {
     while (buttonActive) {
-        await delayExecution(100);
+        await delayHaptic(10);
     }
 }
