@@ -1,0 +1,51 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulsing_button {
+    background: black;
+    color: #fff2f0;
+    font-weight: 500;
+    font-size: 17px;
+    width: 200px;
+    height: 60px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: transform 200ms, box-shadow 200ms;
+    animation: pulse 2s ease-out infinite;
+    -webkit-animation: pulse 2s ease-out infinite;
+    -moz-animation: pulse 2s ease-out infinite;
+}
+
+.pulsing_button.working {
+    transform: translateY(4px) translateX(4px);
+    animation: close 200ms linear forwards;
+}
+
+.pulsing_button:active {
+
+ }
+
+@keyframes pulse {
+    from {
+        box-shadow: 4px 4px purple, 7px 7px 15px purple, 0 0 0 purple;
+    }
+
+    to {
+        box-shadow: 4px 4px purple, 7px 7px 15px purple, 100px 100px 300px purple;
+    }
+}
+@keyframes close {
+    from {
+        box-shadow: 4px 4px purple, 7px 7px 15px purple;
+    }
+
+    to {
+        box-shadow: none;
+    }
+}
