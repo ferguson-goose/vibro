@@ -3,17 +3,14 @@ const tg = window.Telegram?.WebApp;
 
 let buttonActive = false;
 let vNum = 0;
+
 const vibroVars = [
-    "light",
+    "soft",
     "medium",
     "heavy",
-    "rigid",
-    "soft",
-    "error",
     "success",
-    "warning",
-    "selectionChanged"
-    ];
+];
+
 window.addEventListener("load", () => {
     if (!tg) return;
 
@@ -45,18 +42,15 @@ button.addEventListener("click", () => {
 })
 
 function delayHaptic(ms) {
-    const {impactOccurred, notificationOccurred, selectionChanged} = tg?.HapticFeedback;
+    const {impactOccurred, notificationOccurred} = tg?.HapticFeedback;
 
     return new Promise((resolve) => {
         setTimeout(() => {
-            if (vNum <= 4) {
+            if (vNum <= 2) {
                 resolve(impactOccurred(vibroVars[vNum]));
-            } else if (vNum > 4 && vNum < 8) {
+            } else {
                 resolve(notificationOccurred(vibroVars[vNum]))
-            } else if (vNum > 7) {
-                resolve(selectionChanged());
             }
-            // resolve()
         }, ms)
     })
 }
